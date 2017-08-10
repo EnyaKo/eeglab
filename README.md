@@ -5,7 +5,7 @@
 3. Click on the "Sync Project with Gradle files"(Left to AVD manager Button on the topbar)
 
 # Get Time from Timer
-minute: MainActivity.min
+minute: MainActivity.min\n
 second: MainActivity.sec
 
 # Run the Project
