@@ -1,3 +1,8 @@
+# Files Description
+- charttest: whole project uploaded
+- main: only the main file in the app/src file
+- achartengine-1.0.0.jar: .jar for chart-display 
+
 # Add achartengine-1.0.0.jar as Library
 1. put the jar (achartengine-1.0.0.jar) into libs folder
 2. add the following line in "dependencies" in the app/build.gradle file  
