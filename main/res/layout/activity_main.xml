@@ -1,57 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.enya5.charttest.MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/totorro_wallpaper"
+    tools:context="com.example.enyako.chartmusic.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/displayECG"
+
+    <TextView
+        android:text="Well, not so fast. "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="5000dp" />
+        android:layout_marginTop="17dp"
+        android:id="@+id/caption1"
+        android:textSize="24sp"
+        android:textColor="@android:color/background_light"
+        android:textStyle="normal|bold|italic"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/button01"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="left"
-            android:layout_weight="1"
-            android:background="#c0c0c0"
-            android:text="Start Recording"
-            android:onClick="playBtn01"/>
-
-        <Button
-            android:id="@+id/button02"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="right"
-            android:layout_weight="1"
-            android:background="#FF0000"
-            android:text="Stop Recording" />
-    </LinearLayout>
     <TextView
-        android:id="@+id/timer"
-        android:layout_width="fill_parent"
+        android:text="Think You Are A Musician?"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0:0"
-        android:textSize="70sp"
-        android:layout_x="90px"
-        android:layout_y="160px"
-        >
-    </TextView>
+        android:layout_marginTop="44dp"
+        android:id="@+id/title"
+        android:textSize="24sp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="normal|bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif" />
 
+    <TextView
+        android:text="We'll see after the"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/caption21"
+        android:textSize="24sp"
+        android:textColor="@android:color/background_light"
+        android:textStyle="normal|bold|italic"
+        android:layout_below="@+id/caption1"
+        android:layout_toLeftOf="@+id/button02"
+        android:layout_toStartOf="@+id/button02" />
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:text="  test..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/caption22"
+        android:textSize="24sp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="normal|bold|italic"
+        android:layout_below="@+id/caption1"
+        android:layout_toRightOf="@+id/caption21"
+        android:layout_toEndOf="@+id/caption21" />
+
+    <Button
+        android:text="start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button02"
+        android:onClick="playbtn"
+        android:fontFamily="serif-monospace"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/background_light"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_alignBaseline="@+id/button02"
+        android:layout_alignBottom="@+id/button02"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignStart="@+id/title" />
+
+    <Button
+        android:text="Result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button02"
+        android:textStyle="normal|bold"
+        android:fontFamily="serif-monospace"
+        android:textAlignment="center"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:textColor="@android:color/holo_blue_bright"
+        android:layout_marginBottom="94dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/title"
+        android:layout_alignEnd="@+id/title"
+        android:onClick="resultbtn" />
+
+</RelativeLayout>

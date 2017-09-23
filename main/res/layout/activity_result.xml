@@ -1,41 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.enya5.charttest.ResultActivity">
+    android:weightSum="1"
+    android:background="#ff000000">
 
-    <LinearLayout
-        android:id="@+id/displayResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="5000dp"
-        />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button03"
-        android:text="Go to Main Activity"
-        android:textSize="17sp"
-        />
+        <LinearLayout
+            android:id="@+id/displayResult"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:paddingTop="200dp"
+            android:orientation="vertical" />
+
     <TextView
-        android:id="@+id/mResult"
+        android:text="EEG Analysis Result"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="You are a"
-        android:textSize="20sp"
-        android:layout_x="90px"
-        android:layout_y="160px"
-        >
-    </TextView>
+        android:layout_marginTop="43dp"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/background_light"
+        android:textAlignment="center"
+        android:fontFamily="serif-monospace"
+        android:textSize="24sp"
+        android:textStyle="normal|bold" />
 
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:id="@+id/mResult"
+        android:textColor="@android:color/background_light"
+        android:fontFamily="serif-monospace" />
 
-</LinearLayout>
+    <Button
+        android:text="BACK"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:id="@+id/bt_go_back"
+        android:layout_marginBottom="32dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@android:color/holo_orange_dark"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/mResult"
+        android:layout_toEndOf="@+id/mResult"
+        android:layout_marginLeft="35dp"
+        android:layout_marginStart="35dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:fontFamily="serif-monospace" />
+
+</RelativeLayout>
