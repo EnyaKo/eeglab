@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private Long minius;
     private Long seconds;
+    private Long minisec;
 
     final int [] p={
             R.raw.music1, R.raw.music2, R.raw.music3, R.raw.music4, R.raw.music5, R.raw.music6, R.raw.music7, R.raw.music8, R.raw.music9, R.raw.music10,
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(minius != null || seconds != null){
-            OutputData+=data[num].path+" "+minius+":"+seconds+"\n";
+            OutputData+=data[num].path+" "+minius+":"+seconds+":"+minisec+"\n";
         }
 
         MediaPlayer mp= MediaPlayer.create(this, data[num].number);
@@ -164,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
             Long spentTime = System.currentTimeMillis() - startTime;
             minius = (spentTime/1000)/60; //計算目前已過分鐘數
             seconds = (spentTime/1000) % 60; //計算目前已過秒數
+            minisec = spentTime % 1000;
             //time.setText(minius+":"+seconds);
             handler.postDelayed(this, 1000);
         }
