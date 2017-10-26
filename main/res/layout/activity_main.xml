@@ -8,9 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/totorro_wallpaper"
-    tools:context="com.example.enyako.chartmusic.MainActivity">
-
+    tools:context="com.example.enyako.eegtest.MainActivity">
 
     <TextView
         android:text="Well, not so fast. "
@@ -19,7 +17,7 @@
         android:layout_marginTop="17dp"
         android:id="@+id/caption1"
         android:textSize="24sp"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/holo_blue_dark"
         android:textStyle="normal|bold|italic"
         android:layout_below="@+id/title"
         android:layout_centerHorizontal="true" />
@@ -31,35 +29,38 @@
         android:layout_marginTop="44dp"
         android:id="@+id/title"
         android:textSize="24sp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@android:color/background_dark"
         android:textStyle="normal|bold"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif" />
 
-    <TextView
-        android:text="We'll see after the"
+    <Button
+        android:text="Result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/caption21"
-        android:textSize="24sp"
-        android:textColor="@android:color/background_light"
-        android:textStyle="normal|bold|italic"
-        android:layout_below="@+id/caption1"
-        android:layout_toLeftOf="@+id/button02"
-        android:layout_toStartOf="@+id/button02" />
+        android:id="@+id/button03"
+        android:textStyle="normal|bold"
+        android:fontFamily="serif-monospace"
+        android:textAlignment="center"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:textColor="@android:color/holo_red_light"
+        android:layout_marginBottom="94dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/title"
+        android:layout_alignEnd="@+id/title"
+        android:onClick="resultbtn" />
 
     <TextView
-        android:text="  test..."
+        android:text="We'll see after the test..."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/caption22"
         android:textSize="24sp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@android:color/holo_blue_dark"
         android:textStyle="normal|bold|italic"
         android:layout_below="@+id/caption1"
-        android:layout_toRightOf="@+id/caption21"
-        android:layout_toEndOf="@+id/caption21" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:text="start"
@@ -69,27 +70,10 @@
         android:onClick="playbtn"
         android:fontFamily="serif-monospace"
         android:textStyle="normal|bold"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/holo_orange_dark"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_alignBaseline="@+id/button02"
-        android:layout_alignBottom="@+id/button02"
+        android:layout_alignBaseline="@+id/button03"
+        android:layout_alignBottom="@+id/button03"
         android:layout_alignLeft="@+id/title"
         android:layout_alignStart="@+id/title" />
-
-    <Button
-        android:text="Result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button02"
-        android:textStyle="normal|bold"
-        android:fontFamily="serif-monospace"
-        android:textAlignment="center"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:textColor="@android:color/holo_blue_bright"
-        android:layout_marginBottom="94dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/title"
-        android:layout_alignEnd="@+id/title"
-        android:onClick="resultbtn" />
-
 </RelativeLayout>

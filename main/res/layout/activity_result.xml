@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
     android:background="#ff000000">
 
 
-        <LinearLayout
-            android:id="@+id/displayResult"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:paddingTop="200dp"
-            android:orientation="vertical" />
 
     <TextView
         android:text="EEG Analysis Result"
@@ -26,6 +19,19 @@
         android:fontFamily="serif-monospace"
         android:textSize="24sp"
         android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textColor="@android:color/background_light" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="126dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button" />
 
     <TextView
         android:text="TextView"
@@ -54,4 +60,4 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
         android:fontFamily="serif-monospace" />
 
-</RelativeLayout>
+</LinearLayout>

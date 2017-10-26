@@ -1,5 +1,8 @@
-package com.example.enya5.charttest;
+package com.example.enyako.eegtest;
 
+/**
+ * Created by EnyaKo on 9/23/2017.
+ */
 import java.util.List;
 import java.util.ArrayList;
 

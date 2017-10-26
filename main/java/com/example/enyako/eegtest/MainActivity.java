@@ -1,12 +1,9 @@
-package com.example.enya5.charttest;
+package com.example.enyako.eegtest;
 
-import java.util.*;
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContentResolverCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,11 +17,18 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-public class MusicPlay {
-    public boolean start;
-    public boolean stop;
+import android.os.Handler;
+import android.content.Intent;
+import android.widget.Button;
 
-    final int[] p = {
+
+public class MainActivity extends AppCompatActivity {
+    private Long startTime;
+    private Handler handler = new Handler();
+    private Long minius;
+    private Long seconds;
+
+    final int [] p={
             R.raw.music1, R.raw.music2, R.raw.music3, R.raw.music4, R.raw.music5, R.raw.music6, R.raw.music7, R.raw.music8, R.raw.music9, R.raw.music10,
             R.raw.music11, R.raw.music12, R.raw.music13, R.raw.music14, R.raw.music15, R.raw.music16, R.raw.music17, R.raw.music18, R.raw.music19, R.raw.music20,
             R.raw.music21, R.raw.music22, R.raw.music23, R.raw.music24, R.raw.music25, R.raw.music26, R.raw.music27, R.raw.music28, R.raw.music29, R.raw.music30,
@@ -36,118 +40,135 @@ public class MusicPlay {
     class map {
         String path;
         int number;
-
         public map(String path, Integer number) {
             this.path = path;
-            this.number = number;
+            this.number=number;
         }
     }
-
-    private int times = 2;
-    map[] data = new map[60 * times];
+    private int times=2;
+    map [] data = new map[60*times];
     private static final int REQUEST_WRITE_STORAGE = 112;
-    private String OutputData = "start\n";
+    private String OutputData = new String();
 
-    public MusicPlay() {
-        this.start = false;
-        this.stop = false;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
     }
 
-    public void musicStart(MainActivity Activity) {
-        this.start = true;
-        for (int i = 0; i < times; i++) {
-            for (int j = 0; j < 60; j++) {
-                int tem = j + 1;
-                data[i * 60 + j] = new map("music" + tem, p[j]);
+    public void resultbtn(View view){
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, ResultActivity.class);
+        startActivity(intent);
+        MainActivity.this.finish();
+    }
+
+    public void playbtn(View view) {
+        startTime = System.currentTimeMillis(); //取得目前時間
+        handler.removeCallbacks(updateTimer); //設定定時要執行的方法
+        handler.postDelayed(updateTimer, 1000); //設定Delay的時間
+        for(int i=0; i<times ; i++){
+            for(int j=0; j<60; j++){
+                int tem=j+1;
+                data[i*60+j]=new map(""+tem,p[j]);
             }
         }
         Collections.shuffle(Arrays.asList(data));
-        Out(OutputData, Activity);
-        play(-1, Activity);
+        Out(OutputData);
+        play(-1);
     }
 
-    public void musicStop() {
-        this.stop = true;
-    }
+    private void Out(String tem){
 
-    private void Out(String tem, MainActivity Activity) {
-
-        boolean hasPermission = (ContextCompat.checkSelfPermission(Activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+        boolean hasPermission = (ContextCompat.checkSelfPermission(this,  Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
         if (!hasPermission) {
-            ActivityCompat.requestPermissions(Activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
-        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},  REQUEST_WRITE_STORAGE);
+        }else{
             String sdPath = Environment.getExternalStorageDirectory() + "/data/";
-            try {
+            try{
                 FileWriter fw = new FileWriter(sdPath + "MyData.txt", false);
                 BufferedWriter bw = new BufferedWriter(fw);
                 bw.write(tem);
                 bw.newLine();
                 bw.close();
-            } catch (Exception e) {
+            }catch (Exception e){
                 Log.i("Failed to save", e.getMessage());
             }
         }
     }
 
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        this.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode)
+        {
             case REQUEST_WRITE_STORAGE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
                     String sdPath = Environment.getExternalStorageDirectory() + "/data/";
-                    try {
+                    try{
                         FileWriter fw = new FileWriter(sdPath + "MyData.txt", false);
                         BufferedWriter bw = new BufferedWriter(fw);
                         bw.write(OutputData);
                         bw.newLine();
                         bw.close();
-                    } catch (Exception e) {
+                    }catch (Exception e){
                         Log.i("Failed to save", e.getMessage());
                     }
 
-                } else {
+                } else
+                {
                     //not allowed to write
                 }
             }
         }
     }
 
-    private void play(int num, final MainActivity Activity) {
+    private void play(int num){
 
         num++;
-        final int tem = num;
+        final int tem=num;
         Random r = new Random();
-        int ran = r.nextInt(2500 - 2000) + 2000;
+        int ran=r.nextInt(2500 - 2000) + 2000;
 
         try {
             //delay
             Thread.sleep(ran);
 
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
 
-        //TextView t1 = (TextView)findViewById(R.id.textView);
-        //TextView t2 = (TextView)findViewById(R.id.textView2);
-        //t1.setText("random time:"+ran);
-        //t2.setText(num+"  : "+data[num].path);
-        OutputData += "\n" + data[num].path;
+        if(minius != null || seconds != null){
+            OutputData+=data[num].path+" "+minius+":"+seconds+"\n";
+        }
 
-        MediaPlayer mp = MediaPlayer.create(Activity, data[num].number);
+        MediaPlayer mp= MediaPlayer.create(this, data[num].number);
         mp.start();
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 mp.release();
-                if (tem < 59 + 60 * (times - 1)) {
-                    play(tem, Activity);
-                } else {
-                    Out(OutputData, Activity);
+                if(tem<59+60*(times-1)){
+                    play(tem);
+                }else{
+                    Out(OutputData);
                 }
-            }
-
-            ;
+            };
         });
-
     }
+    //固定要執行的方法
+    private Runnable updateTimer = new Runnable() {
+        public void run() {
+            //final TextView time = (TextView) findViewById(R.id.timer);
+            Long spentTime = System.currentTimeMillis() - startTime;
+            minius = (spentTime/1000)/60; //計算目前已過分鐘數
+            seconds = (spentTime/1000) % 60; //計算目前已過秒數
+            //time.setText(minius+":"+seconds);
+            handler.postDelayed(this, 1000);
+        }
+    };
+
+
+
 }
