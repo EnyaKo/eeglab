@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             this.number=number;
         }
     }
-    private int times=2;
+    private int times=1;
     map [] data = new map[60*times];
     private static final int REQUEST_WRITE_STORAGE = 112;
     private String OutputData = new String();
@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         Collections.shuffle(Arrays.asList(data));
-        Out(OutputData);
         play(-1);
     }
 
@@ -90,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 FileWriter fw = new FileWriter(sdPath + "MyData.txt", false);
                 BufferedWriter bw = new BufferedWriter(fw);
                 bw.write(tem);
-                bw.newLine();
                 bw.close();
             }catch (Exception e){
                 Log.i("Failed to save", e.getMessage());
@@ -111,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
                         FileWriter fw = new FileWriter(sdPath + "MyData.txt", false);
                         BufferedWriter bw = new BufferedWriter(fw);
                         bw.write(OutputData);
-                        bw.newLine();
                         bw.close();
                     }catch (Exception e){
                         Log.i("Failed to save", e.getMessage());
@@ -140,8 +137,12 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if(minius != null || seconds != null){
-            OutputData+=data[num].path+" "+minius+":"+seconds+":"+minisec+"\n";
+        if(seconds !=null){
+            OutputData+="\n"+data[num].path+" "+minius+":"+seconds+":"+minisec;
+        }else if(num==59){
+            OutputData+="\n"+data[num].path+" "+minius+":"+seconds+":"+minisec;
+        }else{
+            OutputData+=data[num].path+" "+"0:0:250";
         }
 
         MediaPlayer mp= MediaPlayer.create(this, data[num].number);

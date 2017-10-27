@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ff000000">
@@ -21,43 +21,80 @@
         android:textStyle="normal|bold" />
 
     <TextView
-        android:text="TextView"
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mResult"
+        android:textColor="@android:color/background_light"
+        android:fontFamily="serif-monospace"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/showResult"
+        android:layout_centerHorizontal="true"
+        android:textStyle="normal|bold|italic" />
+
+    <TextView
+        android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        android:layout_alignBaseline="@+id/button"
+        android:layout_alignBottom="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:textStyle="normal|bold"
+        android:textAlignment="center" />
 
     <Button
-        android:text="Button"
+        android:text="show Result"
         android:layout_width="126dp"
         android:layout_height="wrap_content"
-        android:id="@+id/button" />
+        android:id="@+id/showResult"
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
+        android:layout_marginRight="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/background_light"
+        android:textColor="@android:color/holo_red_dark"
+        style="@style/Widget.AppCompat.Button"
+        android:textStyle="normal|bold" />
+
+    <Button
+        android:layout_width="126dp"
         android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:text="analyze data"
+        android:layout_marginTop="19dp"
         android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:id="@+id/mResult"
-        android:textColor="@android:color/background_light"
-        android:fontFamily="serif-monospace" />
+        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
+        android:background="@android:color/background_light"
+        android:textColor="@android:color/holo_red_dark"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:textStyle="normal|bold" />
+
+    <LinearLayout
+        android:id="@+id/displayResult"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:paddingTop="250dp"
+        android:orientation="vertical" />
 
     <Button
         android:text="BACK"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
         android:id="@+id/bt_go_back"
-        android:layout_marginBottom="32dp"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:background="@android:color/holo_orange_dark"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/mResult"
-        android:layout_toEndOf="@+id/mResult"
-        android:layout_marginLeft="35dp"
-        android:layout_marginStart="35dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:fontFamily="serif-monospace" />
+        android:layout_alignLeft="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:layout_marginBottom="14dp"
+        android:textSize="10sp"
+        android:background="@android:color/holo_orange_dark"
+        android:textColor="@android:color/background_light"
+        style="@style/Widget.AppCompat.Button.Small" />
 
-</LinearLayout>
+
+</RelativeLayout>

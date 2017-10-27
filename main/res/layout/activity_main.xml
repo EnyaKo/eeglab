@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.enyako.eegtest.MainActivity">
+    tools:context="com.example.enyako.eegtest.MainActivity"
+    android:background="#ff000000">
 
     <TextView
         android:text="Well, not so fast. "
@@ -17,9 +18,20 @@
         android:layout_marginTop="17dp"
         android:id="@+id/caption1"
         android:textSize="24sp"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="@android:color/background_light"
         android:textStyle="normal|bold|italic"
         android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="We'll see after the test..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/caption22"
+        android:textSize="24sp"
+        android:textColor="@android:color/background_light"
+        android:textStyle="normal|bold|italic"
+        android:layout_below="@+id/caption1"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -29,11 +41,27 @@
         android:layout_marginTop="44dp"
         android:id="@+id/title"
         android:textSize="24sp"
-        android:textColor="@android:color/background_dark"
+        android:textColor="@android:color/background_light"
         android:textStyle="normal|bold"
+        android:fontFamily="sans-serif"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="sans-serif" />
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="start"
+        android:id="@+id/button02"
+        android:onClick="playbtn"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/holo_orange_dark"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:background="@android:color/background_light"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/button03"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignStart="@+id/title"
+        android:textSize="18sp"
+        android:layout_width="wrap_content" />
 
     <Button
         android:text="Result"
@@ -41,39 +69,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/button03"
         android:textStyle="normal|bold"
-        android:fontFamily="serif-monospace"
+        android:fontFamily="sans-serif-condensed"
         android:textAlignment="center"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:textColor="@android:color/holo_red_light"
-        android:layout_marginBottom="94dp"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_marginBottom="91dp"
+        android:onClick="resultbtn"
+        android:background="@android:color/background_light"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/title"
         android:layout_alignEnd="@+id/title"
-        android:onClick="resultbtn" />
-
-    <TextView
-        android:text="We'll see after the test..."
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/caption22"
-        android:textSize="24sp"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textStyle="normal|bold|italic"
-        android:layout_below="@+id/caption1"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button02"
-        android:onClick="playbtn"
-        android:fontFamily="serif-monospace"
-        android:textStyle="normal|bold"
-        android:textColor="@android:color/holo_orange_dark"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_alignBaseline="@+id/button03"
-        android:layout_alignBottom="@+id/button03"
-        android:layout_alignLeft="@+id/title"
-        android:layout_alignStart="@+id/title" />
+        android:textSize="18sp" />
 </RelativeLayout>

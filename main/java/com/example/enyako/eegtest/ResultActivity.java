@@ -1,5 +1,6 @@
 package com.example.enyako.eegtest;
 
+import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,30 +9,73 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.widget.LinearLayout;
+import org.achartengine.ChartFactory;
+import org.achartengine.chart.PointStyle;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
+import org.achartengine.GraphicalView;
+
+
+
 public class ResultActivity extends AppCompatActivity {
-    private Button button;
-    private TextView textView;
+    private Button btnAnalysis;
+    private TextView textAnalysisOk;
+    private Button btnDrawResult;
+    float [] chordSum = {1};
+    float [] intervalSum = {1};
+
+    private Button mBtGoBack;
+
+    private GraphicalView graphView;
+    public Result result = new Result();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        button = (Button) findViewById(R.id.button);
-        textView = (TextView) findViewById(R.id.textView);
+        // TODO button go back to MainActivity
+        mBtGoBack = (Button) findViewById(R.id.bt_go_back);
+        mBtGoBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(ResultActivity.this, MainActivity.class);
+                startActivity(intent);
+                ResultActivity.this.finish();
+            }
+        });
 
-        button.setOnClickListener(new View.OnClickListener() {
+        // TODO button analysis
+        btnAnalysis = (Button) findViewById(R.id.button);
+        textAnalysisOk = (TextView) findViewById(R.id.textView2);
+
+        btnAnalysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    if( Environment.getExternalStorageState().equals(Environment.MEDIA_REMOVED) ){  //檢查sdcard是否存在
+                    if (Environment.getExternalStorageState().equals(Environment.MEDIA_REMOVED)) {  //檢查sdcard是否存在
                         return;
                     }
+
                     File SDCardpath = Environment.getExternalStorageDirectory();                         //取得sdcard路徑
                     FileReader myDataPath = new FileReader(SDCardpath.getParent() + "/" + SDCardpath.getName() + "/data/input.txt");    //打開檔案路徑
                     BufferedReader myBufferedReader = new BufferedReader(myDataPath);                                                //將檔案讀至緩衝區
+
+
 
                     ArrayList mylist = new ArrayList();             //因不確定檔案有幾筆，使用動態的arraylist
 
@@ -39,13 +83,14 @@ public class ResultActivity extends AppCompatActivity {
                     //myTextLine = myBufferedReader.readLine();       //讀進資料
                     String tempstring;
 
-                    while (myTextLine!=null)                         //讀取檔案直到EOF
+                    while (myTextLine != null)                         //讀取檔案直到EOF
                     {
                         tempstring = myTextLine;
                         mylist.add(tempstring);                     //加入arraylist
                         //myTextLine = myBufferedReader.readLine();   //下一筆時間
                         myTextLine = myBufferedReader.readLine();   //下一筆資料
                     }
+
 
                     int count = mylist.size();                      //取得共有幾筆資料
                     float [] array = new float[count / 4 + 1];          //濾波前的原始資料
@@ -61,7 +106,7 @@ public class ResultActivity extends AppCompatActivity {
 
                     System.arraycopy(array, 0, src, 0, array.length);   //copy array[] 進 src[] 以進行濾波
 
-                    //******************************以下為low pass filter**************************//
+                    //******************************以下為low pass filter**************************/
                     final int NZEROS = 6;
                     final int NPOLES = 6;
                     final float GAIN =  40.9836f;
@@ -101,22 +146,66 @@ public class ResultActivity extends AppCompatActivity {
                     //******************************以上為low pass filter**************************//
                     System.arraycopy(dest, 0, result, 0, dest.length);  //copy dest[] 進 result[]
 
-                    FileReader timeDataPath = new FileReader(SDCardpath.getParent() + "/" + SDCardpath.getName() + "/data/MyData.txt"); //打開紀錄時間的檔案
+
+                    /*FileReader timeDataPath = new FileReader(SDCardpath.getParent() + "/" + SDCardpath.getName() + "/data/timedata.txt");
                     BufferedReader timeBufferedReader = new BufferedReader(timeDataPath);
 
-                    ArrayList timelist = new ArrayList();       //因不確定檔案有幾筆，使用動態的arraylist
+                    ArrayList timelist = new ArrayList();
 
                     String str = timeBufferedReader.readLine();
                     String tempStr;
 
-                    while (str!=null)                           //讀取檔案直到EOF
+                    while (str!=null)
                     {
                         tempStr = str;
-                        timelist.add(tempStr);                  //加入arraylist
-                        str = timeBufferedReader.readLine();    //下一筆資料
+                        timelist.add(tempStr);
+                        str = timeBufferedReader.readLine();
                     }
 
-                    count = timelist.size();                    //取得共有幾筆時間資料
+                    count = timelist.size();
+
+                    String [] timeArray = new String[count];
+
+                    String [] tempArray = new String[2];
+                    int [][] timeData = new int[count][2];
+
+                    for(int x = 0; x < count; x++) {
+                        timeArray[x] = (String)timelist.get(x);
+                        tempArray = timeArray[x].split("\\s|:");
+
+                        int num=0;
+                        int time=0;
+
+                        num = Integer.parseInt(tempArray[0]);
+                        time = Integer.parseInt(tempArray[1]);
+
+                        timeData[x][0] = num;
+                        timeData[x][1] = time;
+                    }*/
+
+                    ArrayList timelist = new ArrayList();       //因不確定檔案有幾筆，使用動態的arraylist
+                    try {
+                        FileReader timeDataPath = new FileReader(SDCardpath.getParent() + "/" + SDCardpath.getName() + "/data/MyData.txt"); //打開紀錄時間的檔案
+                        BufferedReader timeBufferedReader = new BufferedReader(timeDataPath);
+
+
+
+
+                        String str = timeBufferedReader.readLine();
+                        String tempStr;
+
+                        while (str != null)                           //讀取檔案直到EOF
+                        {
+                            tempStr = str;
+                            timelist.add(tempStr);                  //加入arraylist
+                            str = timeBufferedReader.readLine();    //下一筆資料
+                        }
+                        count = timelist.size();                    //取得共有幾筆時間資料
+                    }
+                    catch (Exception e) {
+                        textAnalysisOk.setText("read mydata failed");
+                    }
+
 
                     String [] timeArray = new String[count];
 
@@ -160,8 +249,8 @@ public class ResultActivity extends AppCompatActivity {
                     }
 
 
-                    float [] chordSum = new float[151];
-                    float [] intervalSum = new float[151];
+                    chordSum = new float[151];
+                    intervalSum = new float[151];
                     float chordNum = 0;
                     float intervalNum = 0;
 
@@ -215,13 +304,121 @@ public class ResultActivity extends AppCompatActivity {
                     iBufferedWriter.close();
 
 
-                    textView.setText("ok");
+                    textAnalysisOk.setText("ok");
                 }
                 catch (Exception e) {
-                    textView.setText("not ok");
+                    textAnalysisOk.setText("not ok");
                 }
 
             }
+        }); // end of buttonclick
+
+        // TODO button draw result
+        btnDrawResult = (Button) findViewById(R.id.showResult);
+        btnDrawResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO set Result: titles, x, y; and build dataset
+                result.titles = new String[]{"chord", "interval"}; // 定義折線的名稱
+                //List<double[]> x = new ArrayList<double[]>(); // 點的x坐標
+                //List<double[]> y = new ArrayList<double[]>(); // 點的y坐標
+                //x.add(new double[] { 1, 3, 5, 7, 9, 11 });
+                //x.add(new double[] { 0, 2, 4, 6, 8, 10 });
+                //y.add(new double[] { 3, 14, 8, 22, 16, 18 });
+                //y.add(new double[] { 20, 18, 15, 12, 10, 8 });
+                result.addNewPoints(chordSum.length,chordSum);
+                //result.addNewPoints(6,new float[] { 1, 3, 5, 7, 9, 11 });
+                //result.addNewPoints(151);
+                //result.addNewPoints(151);
+                //result.addNewPoints(6,new float[] { 1, 3, 5, 7, 9, 11 });
+                result.addNewPoints(intervalSum.length,intervalSum);
+                XYMultipleSeriesDataset dataset = buildDatset(result.titles, result.x, result.y); // 儲存座標值
+
+                // TODO chart display settings
+                int[] colors = new int[]{Color.RED, Color.GREEN};// 折線的顏色
+                PointStyle[] styles = new PointStyle[]{PointStyle.CIRCLE, PointStyle.DIAMOND}; // 折線點的形狀
+                XYMultipleSeriesRenderer renderer = buildRenderer(colors, styles, true);
+
+                setChartSettings(renderer, "Result", "time", "", 0, chordSum.length, -5, 15, Color.BLACK);// 定義折線圖
+
+                // TODO Display chart
+                graphView = ChartFactory.getLineChartView(ResultActivity.this, dataset, renderer);
+                //View chart = ChartFactory.getLineChartView(this, dataset, renderer);
+                //setContentView(chart);
+                LinearLayout layout = (LinearLayout) findViewById(R.id.displayResult);
+                layout.addView(graphView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1000));
+
+                // TODO set result.musician: are you a musician
+                result.musician = false;
+                TextView result = (TextView) findViewById(R.id.mResult);
+                result.setText("You are not a musician!");
+            }
         });
+
     }
+
+
+    // 定義折線圖名稱
+    protected void setChartSettings(XYMultipleSeriesRenderer renderer, String title, String xTitle,
+                                    String yTitle, float xMin, float xMax, float yMin, float yMax, int axesColor) {
+        //renderer.setChartTitle(title); // 折線圖名稱
+        renderer.setBackgroundColor(Color.BLACK);
+        renderer.setApplyBackgroundColor(true);
+        //renderer.setChartTitleTextSize(30); // 折線圖名稱字形大小
+        renderer.setLabelsTextSize(18); // Label Text Size
+        renderer.setAxisTitleTextSize(30); // Axis Title Text Size
+        renderer.setLegendTextSize(30);// 設定左下圖例文字大小 例如：第一條線、第二條線
+        renderer.setPointSize(0);// 設定每個點的大小
+        renderer.setXTitle(xTitle); // X軸名稱
+        renderer.setYTitle(yTitle); // Y軸名稱
+        renderer.setXAxisMin(xMin); // X軸顯示最小值
+        renderer.setXAxisMax(xMax); // X軸顯示最大值
+        renderer.setXLabelsColor(Color.WHITE); // X軸線顏色
+        renderer.setYAxisMin(yMin); // Y軸顯示最小值
+        renderer.setYAxisMax(yMax); // Y軸顯示最大值
+        renderer.setAxesColor(axesColor); // 設定坐標軸顏色
+        renderer.setYLabelsColor(0, Color.WHITE); // Y軸線顏色
+        renderer.setLabelsColor(Color.YELLOW); // 設定標籤顏色
+        renderer.setMarginsColor(Color.BLACK); // 設定背景顏色
+        renderer.setShowGrid(true); // 設定格線
+        //renderer.setZoomButtonsVisible(true);
+    }
+
+    // 定義折線圖的格式
+    private XYMultipleSeriesRenderer buildRenderer(int[] colors, PointStyle[] styles, boolean fill) {
+        XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+        int length = colors.length;
+        for (int i = 0; i < length; i++) {
+            XYSeriesRenderer r = new XYSeriesRenderer();
+            r.setColor(colors[i]);
+            r.setPointStyle(styles[i]);
+            r.setFillPoints(fill);
+            renderer.addSeriesRenderer(r); //將座標變成線加入圖中顯示
+
+        }
+        return renderer;
+    }
+
+    // 資料處理
+    private XYMultipleSeriesDataset buildDatset(String[] titles, List<float[]> xValues,
+                                                List<float[]> yValues) {
+        XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+
+        int length = titles.length; // 折線數量
+        for (int i = 0; i < length; i++) {
+            // XYseries對象,用於提供繪製的點集合的資料
+            XYSeries series = new XYSeries(titles[i]); // 依據每條線的名稱新增
+            float[] xV = xValues.get(i); // 獲取第i條線的資料
+            float[] yV = yValues.get(i);
+            int seriesLength = xV.length; // 有幾個點
+
+            for (int k = 0; k < seriesLength; k++) // 每條線裡有幾個點
+            {
+                series.add(xV[k], yV[k]);
+            }
+            dataset.addSeries(series);
+        }
+        return dataset;
+    }
+
 }

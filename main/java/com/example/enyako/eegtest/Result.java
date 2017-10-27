@@ -10,8 +10,8 @@ public class Result{
     public boolean musician;
     private int flag = 0;
     String[] titles; // 定義折線的名稱
-    List<double[]> x = new ArrayList<double[]>(); // 點的x坐標
-    List<double[]> y = new ArrayList<double[]>(); // 點的y坐標
+    List<float[]> x = new ArrayList<float[]>(); // 點的x坐標
+    List<float[]> y = new ArrayList<float[]>(); // 點的y坐標
 
     public Result(){
         super();
@@ -33,8 +33,25 @@ public class Result{
 
     }
 
-    public void addNewPoints(double[] xValues, double[] yValues) {
-        x.add(xValues);
+    /*public void addNewPoints(int length) {
+        float[] temp1 = new float[length];
+        float[] temp2 = new float[length];
+        for(int i = 0; i < length; i++){
+            temp1[i] = i+1;
+            temp2[i] = 1;
+        }// end of for
+
+        x.add(temp1);
+        y.add(temp2);
+    }*/
+
+    public void addNewPoints(int length, float[] yValues) {
+        float[] temp = new float[length];
+        for(int i = 0; i < length; i++){
+            temp[i] = i+1;
+        }// end of for
+
+        x.add(temp);
         y.add(yValues);
     }
 
