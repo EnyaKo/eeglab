@@ -366,9 +366,10 @@ public class ResultActivity extends AppCompatActivity {
                 //result.musician = false;
                 result.isMusician();
                 TextView resultText = (TextView) findViewById(R.id.mResult);
-                resultText.setText(Float.toString(result.chPtest) + ":" +Float.toString(result.intPtest) + " , "
-                        + Float.toString(result.chNtest) + ":" +Float.toString(result.intNtest)
-                        + " / " +Float.toString(result.N1dif) + ":" + Float.toString(result.P2dif));
+                resultText.setText(//Float.toString(result.chPtest) + ":" +Float.toString(result.intPtest) + " , " +
+                        // Float.toString(result.chNtest) + ":" +Float.toString(result.intNtest) + " / " +
+                           "N1 dif: " + Float.toString(result.N1dif) + "," + "P2 dif: " + Float.toString(result.P2dif)
+                           + " / " + "You are a musician!" );
                 //if(  result.musician == true ){
                 //    resultText.setText("You are a musician!");
                 //}else{
