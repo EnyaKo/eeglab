@@ -79,6 +79,12 @@ public class ResultActivity extends AppCompatActivity {
 
                     ArrayList mylist = new ArrayList();             //因不確定檔案有幾筆，使用動態的arraylist
 
+                    String readInputTime = myBufferedReader.readLine();
+                    String [] inputTime = new String[4];
+                    int inputStart;
+                    inputTime = readInputTime.split("\\s|:");
+                    inputStart = 1000 * ((( Integer.parseInt(inputTime[0]) * 60+Integer.parseInt(inputTime[1]) ) * 60) + Integer.parseInt(inputTime[2]))+Integer.parseInt(inputTime[3]);
+
                     String myTextLine = myBufferedReader.readLine();//鼎鈞會先給我時間再給我資料，但我應該不會用到時間
                     //myTextLine = myBufferedReader.readLine();       //讀進資料
                     String tempstring;
@@ -184,10 +190,16 @@ public class ResultActivity extends AppCompatActivity {
                     }*/
 
                     ArrayList timelist = new ArrayList();       //因不確定檔案有幾筆，使用動態的arraylist
+                    int musicStart = 0;
                     try {
                         FileReader timeDataPath = new FileReader(SDCardpath.getParent() + "/" + SDCardpath.getName() + "/data/MyData.txt"); //打開紀錄時間的檔案
                         BufferedReader timeBufferedReader = new BufferedReader(timeDataPath);
 
+
+                        String readMusicTime = timeBufferedReader.readLine();
+                        String [] musicTime = new String[4];
+                        musicTime = readMusicTime.split("\\s|:");
+                        musicStart = 1000 * ((( Integer.parseInt(musicTime[0]) * 60+Integer.parseInt(musicTime[1]) ) * 60) + Integer.parseInt(musicTime[2]))+Integer.parseInt(musicTime[3]);
 
 
 
@@ -212,6 +224,8 @@ public class ResultActivity extends AppCompatActivity {
                     String [] tempArray = new String[4];        //tempArray[]有4部分
                     int [][] timeData = new int[count][2];       //timeData[]有2部分
 
+                    int timeShift = musicStart - inputStart;
+
                     for(int x = 0; x < count; x++) {
                         timeArray[x] = (String)timelist.get(x); //將arraylist中資料轉成String存進timeArray[]
                         tempArray = timeArray[x].split("\\s|:"); //將timeArray[]的字串遇以空白及冒號分割存進tempArray[]
@@ -223,7 +237,7 @@ public class ResultActivity extends AppCompatActivity {
                         time = 1000 * ( Integer.parseInt(tempArray[1]) * 60+Integer.parseInt(tempArray[2]) ) + Integer.parseInt(tempArray[3]);  //tempArray[1]為分，tempArray[2]為秒，tempArray[3]為毫秒，算出時間
 
                         timeData[x][0] = num;                   //音樂編號存進timeData[][0]
-                        timeData[x][1] = time;                  //時間存進timeData[][1]
+                        timeData[x][1] = time + timeShift;                  //時間存進timeData[][1]
                     }
 
 
@@ -326,12 +340,12 @@ public class ResultActivity extends AppCompatActivity {
                 //x.add(new double[] { 0, 2, 4, 6, 8, 10 });
                 //y.add(new double[] { 3, 14, 8, 22, 16, 18 });
                 //y.add(new double[] { 20, 18, 15, 12, 10, 8 });
-                result.addNewPoints(chordSum.length,chordSum);
+                result.addNewPoints(0, chordSum.length,chordSum);
                 //result.addNewPoints(6,new float[] { 1, 3, 5, 7, 9, 11 });
                 //result.addNewPoints(151);
                 //result.addNewPoints(151);
                 //result.addNewPoints(6,new float[] { 1, 3, 5, 7, 9, 11 });
-                result.addNewPoints(intervalSum.length,intervalSum);
+                result.addNewPoints(1, intervalSum.length,intervalSum);
                 XYMultipleSeriesDataset dataset = buildDatset(result.titles, result.x, result.y); // 儲存座標值
 
                 // TODO chart display settings
@@ -339,7 +353,7 @@ public class ResultActivity extends AppCompatActivity {
                 PointStyle[] styles = new PointStyle[]{PointStyle.CIRCLE, PointStyle.DIAMOND}; // 折線點的形狀
                 XYMultipleSeriesRenderer renderer = buildRenderer(colors, styles, true);
 
-                setChartSettings(renderer, "Result", "time", "", 0, chordSum.length, -5, 15, Color.BLACK);// 定義折線圖
+                setChartSettings(renderer, "Result", "time", "", 0, chordSum.length, -5, 5, Color.BLACK);// 定義折線圖
 
                 // TODO Display chart
                 graphView = ChartFactory.getLineChartView(ResultActivity.this, dataset, renderer);
@@ -349,9 +363,18 @@ public class ResultActivity extends AppCompatActivity {
                 layout.addView(graphView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1000));
 
                 // TODO set result.musician: are you a musician
-                result.musician = false;
-                TextView result = (TextView) findViewById(R.id.mResult);
-                result.setText("You are not a musician!");
+                //result.musician = false;
+                result.isMusician();
+                TextView resultText = (TextView) findViewById(R.id.mResult);
+                resultText.setText(Float.toString(result.chPtest) + ":" +Float.toString(result.intPtest) + " , "
+                        + Float.toString(result.chNtest) + ":" +Float.toString(result.intNtest)
+                        + " / " +Float.toString(result.N1dif) + ":" + Float.toString(result.P2dif));
+                //if(  result.musician == true ){
+                //    resultText.setText("You are a musician!");
+                //}else{
+                //    resultText.setText("You are not a musician!");
+                //}
+
             }
         });
 

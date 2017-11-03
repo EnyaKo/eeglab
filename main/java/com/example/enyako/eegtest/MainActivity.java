@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private Long minius;
     private Long seconds;
     private Long minisec;
+    private Long hour;
+    private int flag=0;
 
     final int [] p={
             R.raw.music1, R.raw.music2, R.raw.music3, R.raw.music4, R.raw.music5, R.raw.music6, R.raw.music7, R.raw.music8, R.raw.music9, R.raw.music10,
@@ -75,6 +77,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         Collections.shuffle(Arrays.asList(data));
+
+
+        hour = (((startTime/1000)/60)/60)%24+8;
+        minius = ((startTime/1000)/60)%60; //計算目前已過分鐘數
+        seconds = (startTime/1000) % 60; //計算目前已過秒數
+        minisec = startTime % 1000;
+        OutputData+=hour+":"+minius+":"+seconds+":"+minisec;
         play(-1);
     }
 
@@ -137,12 +146,16 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if(seconds !=null){
+        if(flag!=0){
             OutputData+="\n"+data[num].path+" "+minius+":"+seconds+":"+minisec;
         }else if(num==59){
             OutputData+="\n"+data[num].path+" "+minius+":"+seconds+":"+minisec;
         }else{
-            OutputData+=data[num].path+" "+"0:0:250";
+
+            flag=1;
+
+            if(ran%1000<250) OutputData+="\n"+data[num].path+" "+"0:0:250";
+            else OutputData+="\n"+data[num].path+" "+"0:0:"+ran%1000;
         }
 
         MediaPlayer mp= MediaPlayer.create(this, data[num].number);
