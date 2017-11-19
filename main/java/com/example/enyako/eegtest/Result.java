@@ -11,8 +11,8 @@ public class Result{
     public boolean musician;
     public float[] N1 = new float[2];;
     public float[] P2 = new float[2];
-    public float N1dif, N1thres, intNtest, chNtest;
-    public float P2dif, P2thres, intPtest, chPtest;
+    public float N1dif, intNtest, chNtest;
+    public float P2dif, intPtest, chPtest;
     String[] titles; // 定義折線的名稱
     List<float[]> x = new ArrayList<float[]>(); // 點的x坐標
     List<float[]> y = new ArrayList<float[]>(); // 點的y坐標
@@ -46,7 +46,7 @@ public class Result{
         intPtest = P2[1];
         N1dif = Math.abs(N1[1]-N1[0]);
         P2dif = Math.abs(P2[1]-P2[0]);
-        if( (N1dif > N1thres) && (P2dif > P2thres) ){
+        if( ( 8 > N1dif && N1dif > 2) && ( 8 > P2dif && P2dif > 2) ){
             musician = true;
         }// end of if
     }
