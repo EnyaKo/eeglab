@@ -66,7 +66,7 @@ public class Result{
     public void addNewPoints(int ind, int length, float[] yValues) {
         float[] temp = new float[length];
         for(int i = 0; i < length; i++){
-            temp[i] = i+1;
+            temp[i] = ((i+1)*8)-200;
         }// end of for
 
         N1[ind] = yValues[37];

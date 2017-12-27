@@ -353,7 +353,7 @@ public class ResultActivity extends AppCompatActivity {
                 PointStyle[] styles = new PointStyle[]{PointStyle.CIRCLE, PointStyle.DIAMOND}; // 折線點的形狀
                 XYMultipleSeriesRenderer renderer = buildRenderer(colors, styles, true);
 
-                setChartSettings(renderer, "Result", "time", "", 0, chordSum.length, -5, 5, Color.BLACK);// 定義折線圖
+                setChartSettings(renderer, "Result", "time(ms)", "", -200, 1000, -5, 5, Color.BLACK);// 定義折線圖
 
                 // TODO Display chart
                 graphView = ChartFactory.getLineChartView(ResultActivity.this, dataset, renderer);
